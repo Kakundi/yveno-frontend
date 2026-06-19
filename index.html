@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScaleLogic Systems // Predictive Recovery Canvas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0B0F19; color: #F3F4F6; font-family: system-ui, sans-serif; }
+        .neon-glow-red { text-shadow: 0 0 10px rgba(239, 68, 68, 0.6); }
+        .neon-glow-green { text-shadow: 0 0 10px rgba(16, 185, 129, 0.6); }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-6 mb-8">
+            <div>
+                <h1 class="text-xl font-bold tracking-wider text-white">SCALELOGIC SYSTEMS</h1>
+                <p class="text-xs text-gray-400 uppercase tracking-widest mt-1">Predictive Recovery Layer // Private Mobility Infrastructure</p>
+            </div>
+            <div class="bg-gray-900 px-4 py-2 rounded border border-gray-800 text-right">
+                <span class="text-xs text-gray-500 block">TARGET CONTEXT</span>
+                <span class="text-sm font-semibold text-gray-300">YVENO RICHELIEU // LIVE SCENARIO SIM</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="space-y-6">
+                <div class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                    <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-800 pb-2">Operational Inputs</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs text-gray-400 font-medium mb-1">Founder Decision Profile</label>
+                            <select id="founderProfile" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm text-gray-200">
+                                <option value="High-Risk">High-Risk (Frequent 11th-Hour Variances)</option>
+                                <option value="Moderate" selected>Moderate (Standard Late-Binding Latency)</option>
+                                <option value="Compliant">Compliant (Strict Infrastructure Alignment)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 font-medium mb-1">Decision Latency (Minutes Passed)</label>
+                            <input type="number" id="latencyMins" value="25" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm text-gray-200">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 font-medium mb-1">Minutes to Hard Slot Expiry</label>
+                            <input type="number" id="slotMins" value="40" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm text-gray-200">
+                        </div>
+                        <button onclick="triggerSimulation()" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-3 px-4 rounded transition tracking-wide mt-2">
+                            RUN PREDICTIVE RUNWAY CALCULATOR
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 p-4 rounded-lg border border-gray-800">
+                    <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Live Feed Link (VDO.Ninja Source)</h3>
+                    <div class="relative aspect-video bg-black rounded border border-gray-800 overflow-hidden">
+                        <iframe id="vdoNinjaFeed" src="https://vdo.ninja/?view=C9GpNS2" class="w-full h-full border-0" allow="autoplay; camera; microphone"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-800 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-gray-400 uppercase tracking-wider">System State Matrix</span>
+                            <div id="sysStatus" class="text-3xl font-black mt-2 text-emerald-400 neon-glow-green">OPTIMIZED</div>
+                        </div>
+                        <div class="mt-6 border-t border-gray-800 pt-4">
+                            <span class="text-xs text-gray-500 block">PRE-COMPILED 'PLAN B' CACHED</span>
+                            <span id="planBCache" class="text-sm font-bold text-gray-300">FALSE</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-800 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-gray-400 uppercase tracking-wider">Synthetic Cost Exposure</span>
+                            <div id="costExposure" class="text-4xl font-black mt-2 text-white">$0</div>
+                        </div>
+                        <div class="mt-6 border-t border-gray-800 pt-4 bg-gray-950 p-3 rounded border border-gray-800">
+                            <span class="text-xs text-amber-500 font-semibold block">RECOVERABLE VIA PREEMPTIVE PATHING</span>
+                            <span id="savingsMitigated" class="text-sm font-bold text-gray-300">$0 USD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                    <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">n8n Live Pipeline Response Log</h3>
+                    <pre id="jsonLog" class="bg-black text-green-400 p-4 rounded text-xs overflow-x-auto h-48 font-mono border border-gray-800">Waiting for live simulation execution parameters...</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function triggerSimulation() {
+            const profile = document.getElementById('founderProfile').value;
+            const latency = document.getElementById('latencyMins').value;
+            const slot = document.getElementById('slotMins').value;
+
+            const N8N_WEBHOOK_URL = 'https://logic.scalelogicsystems.com/webhook/yveno';
+
+            try {
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        base_charter_cost: 45000,
+                        founder_behavior_profile: profile,
+                        current_decision_latency_minutes: parseInt(latency),
+                        slot_window_end: new Date(Date.now() + parseInt(slot) * 60000).toISOString()
+                    })
+                });
+                
+                const data = await response.json();
+                
+                document.getElementById('sysStatus').innerText = data.system_status;
+                if(data.system_status.includes("DAMAGE") || data.system_status.includes("RISK")) {
+                    document.getElementById('sysStatus').className = "text-3xl font-black mt-2 text-red-500 neon-glow-red";
+                } else {
+                    document.getElementById('sysStatus').className = "text-3xl font-black mt-2 text-emerald-400 neon-glow-green";
+                }
+                
+                document.getElementById('costExposure').innerText = "$" + data.synthetic_financial_exposure_usd.toLocaleString();
+                document.getElementById('savingsMitigated').innerText = "$" + data.estimated_damage_mitigation_savings.toLocaleString() + " USD";
+                document.getElementById('planBCache').innerText = data.plan_b_cached ? "TRUE (ACTIVE)" : "FALSE (STANDBY)";
+                document.getElementById('jsonLog').innerText = JSON.stringify(data, null, 2);
+
+            } catch (err) {
+                document.getElementById('jsonLog').innerText = "Pipeline Sync Error: Verify your n8n URL configuration is active.";
+            }
+        }
+    </script>
+</body>
+</html>
